@@ -1,0 +1,92 @@
+# =========================
+# Dependencies
+# =========================
+node_modules/
+.pnp
+.pnp.js
+
+# =========================
+# Expo / React Native
+# =========================
+.expo/
+.expo-shared/
+dist/
+web-build/
+
+# Native builds
+android/
+ios/
+
+# Expo logs
+*.expo.*
+
+# =========================
+# Next.js
+# =========================
+.next/
+out/
+
+# =========================
+# Build
+# =========================
+build/
+coverage/
+.turbo/
+
+# =========================
+# Environment
+# =========================
+.env
+.env.*
+!.env.example
+
+# =========================
+# Logs
+# =========================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+bun.lockb.old
+
+# =========================
+# TypeScript
+# =========================
+*.tsbuildinfo
+
+# =========================
+# Cache
+# =========================
+.cache/
+.parcel-cache/
+.eslintcache
+
+# =========================
+# IDE
+# =========================
+.vscode/
+.idea/
+
+# =========================
+# macOS
+# =========================
+.DS_Store
+
+# =========================
+# Temporary files
+# =========================
+*.tmp
+*.temp
+
+# =========================
+# Package Managers
+# =========================
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+bun.lock
+
+# Uncomment ONE lockfile if using that package manager.
+# Generally you SHOULD commit your lockfile.
