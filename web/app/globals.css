@@ -1,26 +1,38 @@
 @import "tailwindcss";
+@plugin "daisyui";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@theme {
+  /* Base */
+  --color-background: #020817;
+  --color-surface: #0f172a;
+  --color-card: #111827;
+  --color-sidebar: #0b1120;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  /* Brand */
+  --color-primary: #4f46e5; /* Indigo */
+  --color-primary-hover: #4338ca;
+  --color-secondary: #06b6d4; /* Cyan */
+  --color-accent: #8b5cf6; /* Purple */
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+  /* Chat */
+  --color-bubble-sent: #4f46e5;
+  --color-bubble-sent-text: #ffffff;
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  --color-bubble-received: #1e293b;
+  --color-bubble-received-text: #f8fafc;
+
+  /* Semantic */
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --color-info: #38bdf8;
+
+  /* Borders */
+  --color-border: #273449;
+  --color-border-hover: #334155;
+
+  /* Text */
+  --color-text: #f8fafc;
+  --color-muted: #94a3b8;
+  --color-muted-2: #64748b;
 }
