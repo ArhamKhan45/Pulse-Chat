@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-export const connectDB = async () => {
+const connectDB = async () => {
   try {
     const mongoUri = process.env.MONGODB_URI;
     if (!mongoUri) {
@@ -16,3 +16,5 @@ export const connectDB = async () => {
     // status code 0 means success
   }
 };
+
+export default connectDB;
