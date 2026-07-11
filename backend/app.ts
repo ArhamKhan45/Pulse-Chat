@@ -3,8 +3,11 @@ import authRouter from "./src/features/auth/auth.route";
 import chatRouter from "./src/features/chat/chat.route";
 import messageRouter from "./src/features/message/message.route";
 import userRouter from "./src/features/user/user.route";
+import { clerkMiddleware } from "@clerk/express";
 
 const app: Express = express();
+
+app.use(clerkMiddleware());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
