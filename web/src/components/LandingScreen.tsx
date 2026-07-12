@@ -1,5 +1,5 @@
 import { SignInButton, SignUpButton } from "@clerk/nextjs";
-import { ArrowRightIcon, SparklesIcon } from "lucide-react";
+import { ArrowRightIcon } from "lucide-react";
 import Image from "next/image";
 
 function LandingScreen() {
@@ -11,7 +11,7 @@ function LandingScreen() {
         <nav className="flex items-center justify-between relative z-10">
           {/* Logo */}
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-linear-to-br from-primary to-accent">
+            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary shadow-lg shadow-primary/30">
               <Image
                 src="/logo.png"
                 alt="Pulse Logo"
@@ -34,7 +34,7 @@ function LandingScreen() {
             </SignInButton>
 
             <SignUpButton mode="modal">
-              <button className="flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold bg-linear-to-r from-primary to-accent hover:opacity-90 transition shadow-lg shadow-primary/30">
+              <button className="flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold bg-primary text-white hover:bg-primary-hover transition shadow-lg shadow-primary/30">
                 Get Started
                 <ArrowRightIcon className="w-4 h-4" />
               </button>
@@ -46,8 +46,8 @@ function LandingScreen() {
         <div className="flex-1 flex flex-col justify-center max-w-xl relative z-10">
           {/* Tag */}
           <div className="mt-8 mb-6">
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-400/20 text-cyan-400 text-xs font-semibold tracking-widest uppercase backdrop-blur-sm">
-              <span className="size-2 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_10px_#22d3ee]" />
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-accent text-xs font-semibold tracking-widest uppercase backdrop-blur-sm">
+              <span className="size-2 rounded-full bg-primary animate-pulse shadow-[0_0_10px_#14b8a6]" />
               Real-Time Communication
             </span>
           </div>
@@ -55,9 +55,7 @@ function LandingScreen() {
           <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold leading-[1.05] tracking-tight">
             Stay connected,
             <br />
-            <span className="bg-linear-to-r from-fuchsia-500 via-purple-500 to-cyan-400 bg-clip-text text-transparent">
-              anytime, anywhere.
-            </span>
+            <span className="text-primary">anytime, anywhere.</span>
           </h1>
 
           {/* Description */}
@@ -69,14 +67,14 @@ function LandingScreen() {
           {/* CTA BUTTONS */}
           <div className="mt-10 flex items-center gap-4">
             <SignUpButton mode="modal">
-              <button className="group flex items-center gap-3 px-8 py-4  bg-surface font-semibold rounded-2xl hover:bg-card  transition">
+              <button className="group flex items-center gap-3 px-8 py-4 bg-primary text-white font-semibold rounded-2xl hover:bg-primary-hover transition">
                 Start chatting
                 <ArrowRightIcon className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
             </SignUpButton>
 
             <SignInButton mode="modal">
-              <button className="px-8 py-4 text-base-content/60 font-semibold hover:text-base-content transition">
+              <button className="px-8 py-4 text-muted font-semibold hover:text-text transition">
                 I have an account
               </button>
             </SignInButton>
@@ -105,7 +103,7 @@ function LandingScreen() {
                 </div>
               ))}
 
-              <div className="flex items-center justify-center size-10 rounded-full border-2 border-background bg-primary text-white text-xs font-semibold">
+              <div className="flex items-center justify-center size-10 rounded-full border-2 border-background bg-card text-text text-xs font-semibold">
                 +5K
               </div>
             </div>
@@ -156,15 +154,15 @@ function LandingScreen() {
           className="absolute inset-0"
           style={{
             backgroundImage: `
-              linear-gradient(to right, rgba(39,52,73,0.4) 1px, transparent 1px),
-              linear-gradient(to bottom, rgba(39,52,73,0.4) 1px, transparent 1px)
+              linear-gradient(to right, rgba(38,38,38,0.5) 1px, transparent 1px),
+              linear-gradient(to bottom, rgba(38,38,38,0.5) 1px, transparent 1px)
             `,
             backgroundSize: "50px 50px",
           }}
         />
 
         {/* Radial Glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-125 h-125 bg-linear-to-r from-primary/20 to-accent/20 rounded-full blur-[100px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-125 h-125 bg-primary/15 rounded-full blur-[100px]" />
 
         {/* Image Container */}
         <div className="relative z-10">

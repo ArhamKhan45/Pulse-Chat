@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { protectRoute } from "../../middleware/auth";
+import { getChats, getOrCreateChat } from "./chat.controller";
 
 const chatRouter = Router();
 
