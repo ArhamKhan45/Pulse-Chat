@@ -7,6 +7,7 @@ import { clerkMiddleware } from "@clerk/express";
 import { errorHandler } from "./src/middleware/errorHandler";
 import { createProxyMiddleware } from "http-proxy-middleware";
 import cors from "cors";
+import job from "./src/cron/cron";
 
 const app: Express = express();
 
@@ -22,7 +23,8 @@ app.use(
     credentials: true,
   }),
 );
-
+// ✅ Start the cron job for the render
+job.start();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(clerkMiddleware());
