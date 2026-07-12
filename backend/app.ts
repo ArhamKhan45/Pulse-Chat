@@ -6,12 +6,26 @@ import userRouter from "./src/features/user/user.route";
 import { clerkMiddleware } from "@clerk/express";
 import { errorHandler } from "./src/middleware/errorHandler";
 
+import cors from "cors";
+
 const app: Express = express();
 
-app.use(clerkMiddleware());
+export const allowedOrigins = [
+  "http://localhost:8081", // expo mobile
+  "http://localhost:3000", // vite web devs
+  process.env.FRONTEND_URL!, // production
+].filter(Boolean);
+
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true, // allow credentials from client (cookies, authorization headers, etc.)
+  }),
+);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(clerkMiddleware());
 
 app.get("/", (_, res) => {
   res.status(200).json({
