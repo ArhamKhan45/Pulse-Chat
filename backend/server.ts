@@ -3,6 +3,7 @@ import connectDB from "./src/config/database";
 import dotenv from "dotenv";
 import { createServer } from "http";
 import { initializeSocket } from "./src/utils/socket";
+import { startCronJob } from "./src/cron/cron";
 import { spawn } from "child_process";
 import path from "path";
 
@@ -38,6 +39,11 @@ const startServer = async (): Promise<void> => {
 
     // Start the internal Next.js server
     startNextServer();
+
+    // Start cron job for keep-alive (backend only, doesn't affect frontend)
+    if (process.env.NODE_ENV === "production") {
+      startCronJob();
+    }
 
     // Start HTTP server (public entrypoint, proxies to Next internally)
     httpServer.listen(PORT, () => {
