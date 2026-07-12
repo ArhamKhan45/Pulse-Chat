@@ -27,13 +27,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(clerkMiddleware());
 
-app.get("/", (_, res) => {
-  res.status(200).json({
-    success: true,
-    message: "API is running 🚀",
-  });
-});
-
 const routes = [
   { path: "/auth", router: authRouter },
   { path: "/users", router: userRouter },
