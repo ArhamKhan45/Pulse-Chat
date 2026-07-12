@@ -2,7 +2,7 @@ import cron from "cron";
 import http from "http";
 
 const job = new cron.CronJob("*/14 * * * *", function () {
-  const url = process.env.BACKEND_SITE_URL || "http://localhost:4000";
+  const url = process.FRONTEND_URL || "https://pulse-chat-f7bv.onrender.com";
 
   http
     .get(`${url}/api/v1/server/wakeup`, (res) => {
