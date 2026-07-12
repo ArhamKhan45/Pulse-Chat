@@ -29,6 +29,7 @@ app.use(clerkMiddleware());
 
 // Keep-alive endpoint for cron job
 app.get("/api/v1/server/wakeup", (_, res) => {
+  console.log("Keep-alive");
   res.status(200).json({
     success: true,
     message: "Server is awake",
