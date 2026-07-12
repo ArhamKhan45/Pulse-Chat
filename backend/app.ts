@@ -31,13 +31,6 @@ app.use(clerkMiddleware());
 // Serve Next.js static files
 app.use(express.static(path.join(__dirname, "../public")));
 
-app.get("/", (_, res) => {
-  res.status(200).json({
-    success: true,
-    message: "API is running 🚀",
-  });
-});
-
 const routes = [
   { path: "/auth", router: authRouter },
   { path: "/users", router: userRouter },
