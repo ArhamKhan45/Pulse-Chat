@@ -19,7 +19,7 @@ ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 RUN bun run build
 
 # ==========================
-# Stage 2: Backend + Runtime
+# Stage 2: Backend
 # ==========================
 FROM oven/bun:latest AS backend
 
@@ -30,16 +30,18 @@ RUN bun install --frozen-lockfile
 
 COPY backend/ ./
 
-# Copy built Next.js output from the web-builder stage
-COPY --from=web-builder /app/web/.next /app/backend/public/.next
-COPY --from=web-builder /app/web/public /app/backend/public
+# ==========================
+# Final: assemble backend + full built web app
+# ==========================
+WORKDIR /app
 
-# ==========================
-# Runtime config
-# ==========================
+COPY --from=web-builder /app/web /app/web
+
 ENV NODE_ENV=production
-ENV PORT=3000
+ENV PORT=4000
+ENV NEXT_INTERNAL_PORT=3000
 
-EXPOSE 3000
+EXPOSE 4000
 
+WORKDIR /app/backend
 CMD ["bun", "server.ts"]
