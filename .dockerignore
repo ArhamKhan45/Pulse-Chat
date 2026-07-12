@@ -31,3 +31,5 @@ bun.lockb.tmp
 
 README.md
 *.md
+
+**/.git
