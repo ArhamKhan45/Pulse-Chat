@@ -26,12 +26,16 @@ RUN bun install --frozen-lockfile
 
 COPY backend/ ./
 
-# Copy built Next.js static export files from web-builder stage
-COPY --from=web-builder /app/web/out ./public
+# Copy built Next.js standalone files from web-builder stage
+COPY --from=web-builder /app/web/.next/standalone /app/web-server
+COPY --from=web-builder /app/web/public /app/web-server/public
+COPY --from=web-builder /app/web/.next/static /app/web-server/.next/static
+
+RUN chmod +x /app/backend/start.sh
 
 ENV NODE_ENV=production
 ENV PORT=3000
 
-EXPOSE 3000
+EXPOSE 3000 3001
 
-CMD ["bun", "server.ts"]
+CMD ["/app/backend/start.sh"]

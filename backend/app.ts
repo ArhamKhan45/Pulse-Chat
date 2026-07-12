@@ -28,8 +28,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(clerkMiddleware());
 
-// Serve Next.js static files
-app.use(express.static(path.join(__dirname, "../public")));
+// Serve Next.js public assets
+app.use(express.static(path.join(__dirname, "../../web-server/public")));
+app.use(
+  "/_next",
+  express.static(path.join(__dirname, "../../web-server/.next/static")),
+);
 
 const routes = [
   { path: "/auth", router: authRouter },
