@@ -5,6 +5,7 @@ import messageRouter from "./src/features/message/message.route";
 import userRouter from "./src/features/user/user.route";
 import { clerkMiddleware } from "@clerk/express";
 import { errorHandler } from "./src/middleware/errorHandler";
+import path from "path";
 
 import cors from "cors";
 
@@ -26,6 +27,9 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(clerkMiddleware());
+
+// Serve Next.js static files
+app.use(express.static(path.join(__dirname, "../public")));
 
 app.get("/", (_, res) => {
   res.status(200).json({

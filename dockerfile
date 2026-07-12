@@ -32,6 +32,10 @@ RUN bun install --frozen-lockfile
 
 COPY backend/ ./
 
+# Copy built Next.js files to public directory for backend to serve
+COPY --from=0 /app/web/.next /app/backend/public/.next
+COPY --from=0 /app/web/public /app/backend/public
+
 # ==========================
 # Runtime
 # ==========================
