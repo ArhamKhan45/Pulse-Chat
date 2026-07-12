@@ -26,9 +26,8 @@ RUN bun install --frozen-lockfile
 
 COPY backend/ ./
 
-# Copy built Next.js files from web-builder stage
-COPY --from=web-builder /app/web/.next ./public/.next
-COPY --from=web-builder /app/web/public ./public
+# Copy built Next.js static export files from web-builder stage
+COPY --from=web-builder /app/web/out ./public
 
 ENV NODE_ENV=production
 ENV PORT=3000
