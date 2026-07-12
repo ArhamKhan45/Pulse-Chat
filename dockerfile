@@ -1,11 +1,6 @@
-# Use the official Bun image
-FROM oven/bun:latest
+# Stage 1: Build Next.js
+FROM oven/bun:latest AS web-builder
 
-WORKDIR /app
-
-# ==========================
-# Build Next.js
-# ==========================
 WORKDIR /app/web
 
 COPY web/package.json web/bun.lock* ./
@@ -13,7 +8,6 @@ RUN bun install --frozen-lockfile
 
 COPY web/ ./
 
-# Build arguments
 ARG NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
 ENV NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=$NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
 
@@ -22,9 +16,9 @@ ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 
 RUN bun run build
 
-# ==========================
-# Backend
-# ==========================
+# Stage 2: Build Backend + Runtime
+FROM oven/bun:latest
+
 WORKDIR /app/backend
 
 COPY backend/package.json backend/bun.lock* ./
@@ -32,13 +26,10 @@ RUN bun install --frozen-lockfile
 
 COPY backend/ ./
 
-# Copy built Next.js files to public directory for backend to serve
-COPY --from=0 /app/web/.next /app/backend/public/.next
-COPY --from=0 /app/web/public /app/backend/public
+# Copy built Next.js files from web-builder stage
+COPY --from=web-builder /app/web/.next ./public/.next
+COPY --from=web-builder /app/web/public ./public
 
-# ==========================
-# Runtime
-# ==========================
 ENV NODE_ENV=production
 ENV PORT=3000
 
