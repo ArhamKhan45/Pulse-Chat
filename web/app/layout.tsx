@@ -29,7 +29,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  keepServerAlive();
+  keepServerAlive.start();
   return (
     <html
       lang="en"

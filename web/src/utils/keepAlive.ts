@@ -1,24 +1,35 @@
-const INTERVAL_MS = 1 * 60 * 1000;
+import cron from "cron";
 
-const keepServerAlive = () => {
-  setInterval(async () => {
-    try {
-      console.log(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/health/keep-server-alive`,
-      );
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/health/keep-server-alive`,
-      );
+const keepServerAlive = new cron.CronJob("*/1 * * * *", async () => {
+  try {
+    const res = await fetch(
+      `${process.env.BACKEND_URL}/api/v1/health/keep-server-alive`,
+    );
 
-      if (res.ok) {
-        console.log("✅ Server is alive. GET request sent successfully.");
-      } else {
-        console.log(`❌ GET request failed. Status: ${res.status}`);
-      }
-    } catch (err) {
-      console.error("❌ Error while sending request:", err);
+    if (res.ok) {
+      console.log("✅ Server is alive. GET request sent successfully.");
+    } else {
+      console.log("GET request failed:", res.status);
     }
-  }, INTERVAL_MS);
-};
+  } catch (err) {
+    console.error("Error while sending request:", err);
+  }
+});
 
 export default keepServerAlive;
+
+// CRON JOB EXPLANATION:
+// Cron jobs are scheduled tasks that run periodically at fixed intervals
+// we want to send 1 GET request for every 14 minutes
+
+// How to define a "Schedule"?
+// You define a schedule using a cron expression, which consists of 5 fields representing:
+
+//! MINUTE, HOUR, DAY OF THE MONTH, MONTH, DAY OF THE WEEK
+
+//? EXAMPLES && EXPLANATION:
+//* 14 * * * * - Every 14 minutes
+//* 0 0 * * 0 - At midnight on every Sunday
+//* 30 3 15 * * - At 3:30 AM, on the 15th of every month
+//* 0 0 1 1 * - At midnight, on January 1st
+//* 0 * * * * - Every hour
