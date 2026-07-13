@@ -3,53 +3,59 @@ import connectDB from "./src/config/database";
 import dotenv from "dotenv";
 import { createServer } from "http";
 import { initializeSocket } from "./src/utils/socket";
-import { startCronJob } from "./src/cron/cron";
 import { spawn } from "child_process";
 import path from "path";
+import { fileURLToPath } from "url";
 
 dotenv.config();
 
-const PORT = process.env.PORT || 4000;
-const NEXT_INTERNAL_PORT = process.env.NEXT_INTERNAL_PORT || 3000;
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const PORT = Number(process.env.PORT) || 4000;
+const NEXT_INTERNAL_PORT = Number(process.env.NEXT_INTERNAL_PORT) || 3000;
 
 const httpServer = createServer(app);
 
 const startNextServer = () => {
-  const nextProcess = spawn("bun", ["run", "start"], {
+  const isProduction = process.env.NODE_ENV === "production";
+
+  const nextProcess = spawn("bun", ["run", isProduction ? "start" : "dev"], {
     cwd: path.join(__dirname, "../web"),
     stdio: "inherit",
-    env: { ...process.env, PORT: String(NEXT_INTERNAL_PORT) },
+    env: {
+      ...process.env,
+      PORT: String(NEXT_INTERNAL_PORT),
+    },
+  });
+
+  nextProcess.on("error", (error) => {
+    console.error("❌ Failed to start Next.js:", error);
+    process.exit(1);
   });
 
   nextProcess.on("exit", (code) => {
-    console.error(`❌ Next.js server exited with code ${code}`);
-    process.exit(1);
+    console.error(`❌ Next.js exited with code ${code}`);
+    process.exit(code ?? 1);
   });
 
   return nextProcess;
 };
 
-const startServer = async (): Promise<void> => {
+const startServer = async () => {
   try {
-    // Connect to MongoDB
     await connectDB();
 
-    // Initialize Socket.IO after DB connection
     initializeSocket(httpServer);
 
-    // Start the internal Next.js server
     startNextServer();
 
-    // Start cron job for keep-alive (backend only, doesn't affect frontend)
-    if (process.env.NODE_ENV === "production") {
-      startCronJob();
-    }
-
-    // Start HTTP server (public entrypoint, proxies to Next internally)
     httpServer.listen(PORT, () => {
-      console.log(`🚀 Server running on http://localhost:${PORT}`);
+      console.log(`🚀 Backend running on http://localhost:${PORT}`);
       console.log(
-        `   ↳ proxying web app from internal port ${NEXT_INTERNAL_PORT}`,
+        `🚀 Next.js ${
+          process.env.NODE_ENV === "production" ? "production" : "development"
+        } server running internally on port ${NEXT_INTERNAL_PORT}`,
       );
     });
   } catch (error) {

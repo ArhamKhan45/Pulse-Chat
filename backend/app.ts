@@ -7,6 +7,7 @@ import { clerkMiddleware } from "@clerk/express";
 import { errorHandler } from "./src/middleware/errorHandler";
 import { createProxyMiddleware } from "http-proxy-middleware";
 import cors from "cors";
+import healthRouter from "./src/features/health/health.route";
 
 const app: Express = express();
 
@@ -27,17 +28,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(clerkMiddleware());
 
-// Keep-alive endpoint for cron job
-app.get("/api/v1/server/wakeup", (_, res) => {
-  console.log("Keep-alive");
-  res.status(200).json({
-    success: true,
-    message: "Server is awake",
-    timestamp: new Date().toISOString(),
-  });
-});
-
 const routes = [
+  { path: "/health", router: healthRouter },
   { path: "/auth", router: authRouter },
   { path: "/users", router: userRouter },
   { path: "/chats", router: chatRouter },

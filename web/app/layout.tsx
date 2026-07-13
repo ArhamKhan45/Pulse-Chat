@@ -1,12 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import {
-  ClerkProvider,
-  Show,
-  SignInButton,
-  SignUpButton,
-  UserButton,
-} from "@clerk/nextjs";
+import { ClerkProvider } from "@clerk/nextjs";
+import job from "@/src/cron/cron";
 
 import "./globals.css";
 
@@ -34,6 +29,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  job.start();
   return (
     <html
       lang="en"
