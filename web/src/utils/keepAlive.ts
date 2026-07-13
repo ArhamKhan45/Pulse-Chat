@@ -3,6 +3,9 @@ const INTERVAL_MS = 1 * 60 * 1000;
 const keepServerAlive = () => {
   setInterval(async () => {
     try {
+      console.log(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/health/keep-server-alive`,
+      );
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/health/keep-server-alive`,
       );
