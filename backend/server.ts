@@ -3,6 +3,7 @@ import connectDB from "./src/config/database";
 import dotenv from "dotenv";
 import { createServer } from "http";
 import { initializeSocket } from "./src/utils/socket";
+import job from "./src/utils/cron";
 
 dotenv.config();
 
@@ -15,7 +16,7 @@ const startServer = async (): Promise<void> => {
   try {
     // Connect to MongoDB
     await connectDB();
-
+    job.start();
     // Initialize Socket.IO after DB connection
     initializeSocket(httpServer);
 

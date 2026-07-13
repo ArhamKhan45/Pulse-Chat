@@ -1,22 +1,21 @@
 import cron from "cron";
+import https from "https";
 
-const keepServerAlive = new cron.CronJob("*/14 * * * *", async () => {
-  try {
-    const res = await fetch(
-      `${process.env.BACKEND_URL}/api/v1/health/keep-server-alive`,
-    );
-
-    if (res.ok) {
-      console.log("✅ Server is alive. GET request sent successfully.");
-    } else {
-      console.log("GET request failed:", res.status);
-    }
-  } catch (err) {
-    console.error("Error while sending request:", err);
-  }
+const job = new cron.CronJob("*/14 * * * *", function () {
+  https
+    .get(
+      `${process.env.BACKEND_SITE_URL}/api/v1/health/keep-server-alive`,
+      (res) => {
+        if (res.statusCode === 200)
+          console.log("GET request sent successfully");
+        else
+          console.log("GET request failed, Cronjob is failed ", res.statusCode);
+      },
+    )
+    .on("error", (e) => console.error("Error while sending request", e));
 });
 
-export default keepServerAlive;
+export default job;
 
 // CRON JOB EXPLANATION:
 // Cron jobs are scheduled tasks that run periodically at fixed intervals
