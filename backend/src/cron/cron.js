@@ -1,32 +1,15 @@
 import cron from "cron";
-import http from "http";
+import https from "https";
 
-const job = new cron.CronJob("*/14 * * * *", function () {
-  const url = process.FRONTEND_URL || "https://pulse-chat-f7bv.onrender.com";
-
-  http
-    .get(`${url}/api/v1/server/wakeup`, (res) => {
-      if (res.statusCode === 200) {
-        console.log(
-          "✓ Keep-alive ping sent successfully at",
-          new Date().toISOString(),
-        );
-      } else {
-        console.log("✗ Keep-alive ping failed with status", res.statusCode);
-      }
+const job = new cron.CronJob("*/1 * * * *", function () {
+  https
+    .get(`${process.env.FRONTEND_URL}/api/v1/server/wakeup`, (res) => {
+      if (res.statusCode === 200) console.log("GET request sent successfully");
+      else
+        console.log("GET request failed, Cronjob is failed ", res.statusCode);
     })
-    .on("error", (e) => console.error("✗ Keep-alive ping error:", e.message));
+    .on("error", (e) => console.error("Error while sending request", e));
 });
-
-export const startCronJob = () => {
-  job.start();
-  console.log("✓ Keep-alive cron job started (every 14 minutes)");
-};
-
-export const stopCronJob = () => {
-  job.stop();
-  console.log("✓ Keep-alive cron job stopped");
-};
 
 export default job;
 
