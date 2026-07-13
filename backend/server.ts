@@ -13,7 +13,7 @@ import { initializeSocket } from "./src/utils/socket";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const PORT = Number(process.env.PORT) || 4000;
+const BACKEND_PORT = Number(process.env.BACKEND_PORT) || 4000;
 const FRONTEND_PORT = Number(process.env.FRONTEND_PORT) || 3000;
 const isProduction = process.env.NODE_ENV === "production";
 
@@ -28,7 +28,7 @@ const startNextServer = (): ChildProcess => {
     stdio: "inherit",
     env: {
       ...process.env,
-      PORT: String(FRONTEND_PORT),
+      BACKEND_PORT: String(FRONTEND_PORT),
     },
   });
 
@@ -103,7 +103,7 @@ const startServer = async () => {
       console.log(
         `🚀 Next.js ${
           isProduction ? "production" : "development"
-        } server running internally on port ${FRONTEND_PORT}`,
+        } server running internally on BACKEND_PORT ${FRONTEND_PORT}`,
       );
     });
   } catch (error) {

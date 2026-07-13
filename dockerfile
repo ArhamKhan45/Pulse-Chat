@@ -40,7 +40,7 @@ WORKDIR /app
 COPY --from=web-builder /app/web /app/web
 
 ENV NODE_ENV=production
-ENV PORT=4000
+ENV BACKEND_PORT=4000
 ENV FRONTEND_PORT=3000
 
 EXPOSE 4000
