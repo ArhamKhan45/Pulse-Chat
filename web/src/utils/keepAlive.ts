@@ -1,4 +1,4 @@
-const INTERVAL_MS = 12 * 60 * 1000;
+const INTERVAL_MS = 1 * 60 * 1000;
 
 const keepServerAlive = () => {
   setInterval(async () => {
