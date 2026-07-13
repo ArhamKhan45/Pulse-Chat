@@ -1,0 +1,18 @@
+# backend/Dockerfile
+FROM oven/bun:latest AS backend
+
+WORKDIR /app
+
+COPY package.json bun.lock* ./
+RUN bun install --frozen-lockfile
+
+COPY . .
+
+ENV NODE_ENV=production
+# Render injects PORT at runtime — this default only matters for local
+# `docker run` without -e PORT=... set.
+ENV PORT=4000
+
+EXPOSE 4000
+
+CMD ["bun", "server.ts"]
