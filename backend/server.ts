@@ -98,8 +98,8 @@ const startServer = async () => {
 
     nextProcess = startNextServer();
 
-    httpServer.listen(PORT, "0.0.0.0", () => {
-      console.log(`🚀 Backend running on 0.0.0.0:${PORT}`);
+    httpServer.listen(BACKEND_PORT, "0.0.0.0", () => {
+      console.log(`🚀 Backend running on 0.0.0.0:${BACKEND_PORT}`);
       console.log(
         `🚀 Next.js ${
           isProduction ? "production" : "development"
