@@ -4,7 +4,7 @@ const keepServerAlive = () => {
   setInterval(async () => {
     try {
       const res = await fetch(
-        `${process.env.BACKEND_URL}/api/v1/health/keep-server-alive`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/health/keep-server-alive`,
       );
 
       if (res.ok) {
