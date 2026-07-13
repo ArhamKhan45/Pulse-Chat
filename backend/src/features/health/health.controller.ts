@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
 
-export const makeServerAlive = async (
+export const keepServerAlive = async (
   _req: Request,
   res: Response,
   next: NextFunction,
