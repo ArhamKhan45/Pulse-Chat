@@ -46,12 +46,16 @@ const startServer = async () => {
   try {
     await connectDB();
 
+    // Set timeouts to prevent connection resets
+    httpServer.keepAliveTimeout = 120000; // 120 seconds
+    httpServer.headersTimeout = 120000; // 120 seconds
+
     initializeSocket(httpServer);
 
     startNextServer();
 
-    httpServer.listen(PORT, () => {
-      console.log(`🚀 Backend running on http://localhost:${PORT}`);
+    httpServer.listen(PORT, "0.0.0.0", () => {
+      console.log(`🚀 Backend running on 0.0.0.0:${PORT}`);
       console.log(
         `🚀 Next.js ${
           process.env.NODE_ENV === "production" ? "production" : "development"
