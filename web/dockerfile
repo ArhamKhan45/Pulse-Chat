@@ -1,5 +1,7 @@
-# web/Dockerfile
-FROM oven/bun:latest AS builder
+# ==========================
+# Builder
+# ==========================
+FROM oven/bun:1 AS builder
 
 WORKDIR /app
 
@@ -8,35 +10,36 @@ RUN bun install --frozen-lockfile
 
 COPY . .
 
-ENV NODE_ENV=production
-
-# Baked in at build time — must point at wherever the backend service
-# actually deploys to, e.g. https://your-api.onrender.com/api/v1
 ARG NEXT_PUBLIC_API_URL
 ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 
 ARG NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
 ENV NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=$NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
 
-# Requires `output: "standalone"` in next.config — produces .next/standalone
-# with only the runtime deps actually needed, instead of full node_modules.
+ENV NODE_ENV=production
+
 RUN bun run build
 
 # ==========================
-# Runtime stage — lean image, no dev dependencies
+# Runner
 # ==========================
-FROM oven/bun:latest AS runner
+FROM oven/bun:1
 
 WORKDIR /app
+
+COPY --from=builder /app/package.json ./
+COPY --from=builder /app/bun.lock* ./
+
+RUN bun install --production --frozen-lockfile
+
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/next.config.ts ./next.config.ts
 
 ENV NODE_ENV=production
 ENV PORT=3000
 ENV HOSTNAME=0.0.0.0
 
-COPY --from=builder /app/.next/standalone ./
-COPY --from=builder /app/.next/static ./.next/static
-COPY --from=builder /app/public ./public
-
 EXPOSE 3000
 
-CMD ["bun", "run", "server.js"]
+CMD ["bun", "run", "start"]
