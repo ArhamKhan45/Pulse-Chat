@@ -3,7 +3,7 @@ import cron from "cron";
 const keepServerAlive = new cron.CronJob("*/14 * * * *", async () => {
   try {
     const res = await fetch(
-      `${process.env.BACKEND_URL}/api/v1/health/keep-server-alive`,
+      `${process.env.BACKEND_SITE_URL}/api/v1/health/keep-server-alive`,
     );
 
     if (res.ok) {
