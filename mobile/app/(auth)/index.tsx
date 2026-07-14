@@ -83,6 +83,8 @@ const AuthScreen = () => {
             <Pressable
               className="flex-1 flex-row items-center justify-center gap-2 bg-white/95 py-4 rounded-2xl active:scale-[0.97]"
               disabled={isLoading}
+              accessibilityRole="button"
+              accessibilityLabel="Continue with Google"
               onPress={() => !isLoading && handleSocialAuth("oauth_google")}
             >
               {loadingStrategy === "oauth_google" ? (
@@ -109,6 +111,8 @@ const AuthScreen = () => {
             <Pressable
               className="flex-1 flex-row items-center justify-center gap-2 bg-white/10 py-4 rounded-2xl border border-white/20 active:scale-[0.97]"
               disabled={isLoading}
+              accessibilityRole="button"
+              accessibilityLabel="Continue with Apple"
               onPress={() => !isLoading && handleSocialAuth("oauth_apple")}
             >
               {loadingStrategy === "oauth_apple" ? (
