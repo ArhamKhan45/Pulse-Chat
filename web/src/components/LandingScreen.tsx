@@ -53,9 +53,9 @@ function LandingScreen() {
           </div>
           {/* Headline */}
           <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold leading-[1.05] tracking-tight">
-            Stay connected,
+            Stay Connected,
             <br />
-            <span className="text-primary">anytime, anywhere.</span>
+            <span className="text-primary">Anytime, Anywhere.</span>
           </h1>
 
           {/* Description */}
