@@ -17,7 +17,6 @@ export const initializeSocket = (httpServer: HttpServer) => {
   // verify socket connection - if the user is authenticated, we will store the user id in the socket
 
   io.use(async (socket, next) => {
-    console.log(socket);
     const token = socket.handshake.auth.token; // this is what user will send from client
     if (!token) return next(new Error("Authentication error"));
 

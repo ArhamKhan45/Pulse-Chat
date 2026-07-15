@@ -1,5 +1,6 @@
+import * as Sentry from "@sentry/react-native";
 import { Stack } from "expo-router";
-import { ScrollView, Text, View } from "react-native";
+import { Button, ScrollView, Text, View } from "react-native";
 
 export default function Chats() {
   return (
@@ -14,6 +15,13 @@ export default function Chats() {
         className="bg-surface"
       >
         <Text className="text-yellow-500">Chat</Text>
+        <Button
+          title="Try!"
+          onPress={() => {
+            console.log("running");
+            Sentry.captureException(new Error("Second error"));
+          }}
+        />
       </ScrollView>
     </>
   );
